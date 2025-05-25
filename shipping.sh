@@ -9,18 +9,7 @@ read -s MYSQL_ROOT_PASSWORD
 
 app_setup
 maven_setup
-
-cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
-VALIDATE $? "Copying shipping service to path"
-
-systemctl daemon-reload &>> $LOG_FILE
-VALIDATE $? "Reloading after changes in systemctl service file"
-
-systemctl enable shipping &>> $LOG_FILE
-VALIDATE $? "Enabling shipping service"
-
-systemctl start shipping &>> $LOG_FILE
-VALIDATE $? "Starting shipping service"
+systemd_setup
 
 dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "Install MySQL"

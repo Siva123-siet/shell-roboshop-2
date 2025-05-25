@@ -73,7 +73,22 @@ maven_setup(){
 
     mv target/shipping-1.0.jar shipping.jar 
     VALIDATE $? "Renaming shipping-1.0.jar with shipping.jar"
-    
+
+}
+systemd_setup(){
+
+   cp $SCRIPT_DIR/app_name.service /etc/systemd/system/app_name.service
+   VALIDATE $? "Copying app_name service to path"
+
+   systemctl daemon-reload &>> $LOG_FILE
+   VALIDATE $? "Reloading after changes in systemctl service file"
+
+   systemctl enable app_name &>> $LOG_FILE
+   VALIDATE $? "Enabling app_name service"
+
+   systemctl start app_name &>> $LOG_FILE
+   VALIDATE $? "Starting app_name service"
+
 }
 # check the user has root priveleges or not
 check_root(){
