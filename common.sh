@@ -26,14 +26,14 @@ app_setup(){
     mkdir -p /app 
     VALIDATE $? "Creating app directory"
 
-    curl -o /tmp/app_name.zip https://roboshop-artifacts.s3.amazonaws.com/app_name-v3.zip 
+    curl -o /tmp/$app_name.zip https://roboshop-artifacts.s3.amazonaws.com/$app_name-v3.zip 
     VALIDATE $? "Downloading the code in temp direcory"
 
     cd /app 
     VALIDATE $? "Moving to app directory"
     rm -rf /app/*
 
-    unzip /tmp/app_name.zip
+    unzip /tmp/$app_name.zip
     VALIDATE $? "Unzipping $app_name file"
 
 }
