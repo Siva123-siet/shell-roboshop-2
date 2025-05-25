@@ -8,15 +8,7 @@ echo "Please enter root password to setup"
 read -s MYSQL_ROOT_PASSWORD
 
 app_setup
-
-dnf install maven -y
-VALIDATE $? "Installing Maven server"
-
-mvn clean package 
-VALIDATE $? "Installing dependencies using maven"
-
-mv target/shipping-1.0.jar shipping.jar 
-VALIDATE $? "Renaming shipping-1.0.jar with shipping.jar"
+maven_setup
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE $? "Copying shipping service to path"

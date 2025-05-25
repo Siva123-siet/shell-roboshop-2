@@ -60,6 +60,19 @@ python_setup(){
 
     pip3 install -r requirements.txt &>> $LOG_FILE
     VALIDATE $? "Installing dependencies using pip3"
+
+}
+
+maven_setup(){
+
+    dnf install maven -y
+    VALIDATE $? "Installing Maven server"
+
+    mvn clean package 
+    VALIDATE $? "Installing dependencies using maven"
+
+    mv target/shipping-1.0.jar shipping.jar 
+    VALIDATE $? "Renaming shipping-1.0.jar with shipping.jar"
     
 }
 # check the user has root priveleges or not
