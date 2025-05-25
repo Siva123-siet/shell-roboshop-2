@@ -3,22 +3,22 @@
 source ./common.sh
 check_root
 
-dnf module disable nginx -y &>> $LOGS_FILE
+dnf module disable nginx -y &>> $LOG_FILE
 VALIDATE $? "Disabling nginx server"
 
-dnf module enable nginx:1.24 -y &>> $LOGS_FILE
+dnf module enable nginx:1.24 -y &>> $LOG_FILE
 VALIDATE $? "Enabling nginx server"
 
-dnf install nginx -y &>> $LOGS_FILE
+dnf install nginx -y &>> $LOG_FILE
 VALIDATE $? "Installing nginx server"
 
-systemctl enable nginx &>> $LOGS_FILE
+systemctl enable nginx &>> $LOG_FILE
 VALIDATE $? "Enabling nginx service"
 
-cp $SCRIPT_DIR/nginx.config /etc/nginx/nginx.conf &>> $LOGS_FILE
+cp $SCRIPT_DIR/nginx.config /etc/nginx/nginx.conf &>> $LOG_FILE
 VALIDATE $? "Copying content into nginx.conf"
 
-systemctl start nginx &>> $LOGS_FILE
+systemctl start nginx &>> $LOG_FILE
 VALIDATE $? "Starting nginx service"
 
 rm -rf /usr/share/nginx/html/* 
@@ -34,10 +34,10 @@ unzip /tmp/frontend.zip
 VALIDATE $? "Unzipping the frontend zipped file in /usr/share/nginx/html path"
 
 rm -rf /etc/nginx/nginx.conf
-cp $SCRIPT_DIR/nginx.config /etc/nginx/nginx.conf &>> $LOGS_FILE
+cp $SCRIPT_DIR/nginx.config /etc/nginx/nginx.conf &>> $LOG_FILE
 VALIDATE $? "Copying content into nginx.conf"
 
-systemctl restart nginx &>> $LOGS_FILE
+systemctl restart nginx &>> $LOG_FILE
 VALIDATE $? "Restarting nginx service"
 
 print_time
