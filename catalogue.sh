@@ -1,5 +1,11 @@
 #!/bin/bash
 
+source ./common.sh
+app_name=catalogue
+
+check_root
+app_setup
+
 dnf module disable nodejs -y &>> $LOG_FILE
 VALIDATE $? "Disabling nodejs"
 
@@ -36,4 +42,5 @@ VALIDATE $? "Installing mongodb"
 mongosh --host mongodb.daws-84s.store </app/db/master-data.js &>> $LOG_FILE
 VALIDATE $? "Loading data to mongodb server"
 
+print_time
 
