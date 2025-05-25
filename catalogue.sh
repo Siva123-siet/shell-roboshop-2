@@ -17,13 +17,13 @@ VALIDATE $? "Copying mongo repo to the path"
 dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "Installing mongodb"
 
-STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+STATUS=$(mongosh --host mongodb.daws-84s.store --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $STATUS -lt 0 ]
 then
-    mongosh --host mongodb.daws84s.site </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host mongodb.daws-84s.store </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading data into MongoDB"
 else
-    echo -e "Data is already loaded ... $Y SKIPPING $N"
+    echo -e "Data is already loaded ... $Y SKIPPING $N" &
 fi
 
 print_time
