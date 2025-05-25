@@ -1,33 +1,16 @@
 #!/bin/bash
 
+source ./common.sh
+app_name=shipping
+
+check_root
 echo "Please enter root password to setup"
 read -s MYSQL_ROOT_PASSWORD
 
+app_setup
+
 dnf install maven -y
 VALIDATE $? "Installing Maven server"
-
-id roboshop
-if [ $? -ne 0 ]
-then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-    VALIDATE $? "Creating roboshop system user"
-else
-    echo -e "System user roboshop already created ... $Y SKIPPING $N"
-fi
-
-mkdir -p /app 
-VALIDATE $? "Creating app directory"
-
-curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
-VALIDATE $? "Downloading the code in temp direcory"
-
-rm -rf /app/*
-cd /app 
-VALIDATE $? "Moving to app directory"
-rm -rf /app/*
-
-unzip /tmp/shipping.zip
-VALIDATE $? "Unzipping shipping file"
 
 mvn clean package 
 VALIDATE $? "Installing dependencies using maven"
@@ -64,3 +47,4 @@ fi
 systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restart shipping"
 
+print_time

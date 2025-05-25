@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./common.sh
+check_root
+
 dnf module disable nginx -y &>> $LOGS_FILE
 VALIDATE $? "Disabling nginx server"
 
@@ -36,3 +39,5 @@ VALIDATE $? "Copying content into nginx.conf"
 
 systemctl restart nginx &>> $LOGS_FILE
 VALIDATE $? "Restarting nginx service"
+
+print_time

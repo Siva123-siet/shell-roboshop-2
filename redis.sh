@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./common.sh
+check_root
+
 dnf module disable redis -y
 VALIDATE $? "Disabling redis"
 
@@ -17,4 +20,6 @@ VALIDATE $? "Enabling redis service"
 
 systemctl start redis 
 VALIDATE $? "Starting redis service"
+
+print_time
 

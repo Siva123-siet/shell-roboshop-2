@@ -1,5 +1,11 @@
 #!/bin/bash
 
+source ./common.sh
+app_name=user
+
+check_root
+app_setup
+
 dnf module disable nodejs -y &>> $LOG_FILE
 VALIDATE $? "Disabling nodejs"
 
@@ -8,28 +14,6 @@ VALIDATE $? "Enabling nodejs"
 
 dnf install nodejs -y &>> $LOG_FILE
 VALIDATE $? "Installing nodejs"
-
-id roboshop
-if [ $? -ne 0 ]
-then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-    VALIDATE $? "Creating roboshop system user"
-else
-    echo -e "System user roboshop already created ... $Y SKIPPING $N"
-fi
-
-mkdir -p /app 
-VALIDATE $? "Creating app directory"
-
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
-VALIDATE $? "Downloading the code in temp direcory"
-
-cd /app 
-VALIDATE $? "Moving to app directory"
-rm -rf /app/*
-
-unzip /tmp/user.zip
-VALIDATE $? "Unzipping user file"
 
 npm install &>> $LOG_FILE
 VALIDATE $? "Installing dependencies using node package manager"
@@ -45,4 +29,6 @@ VALIDATE $? "Enabling user service"
 
 systemctl start user &>> $LOG_FILE
 VALIDATE $? "Starting user service"
+
+print_time
 

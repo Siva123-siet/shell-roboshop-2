@@ -1,5 +1,9 @@
 #!/bin/bash
 
+source ./common.sh
+app_name=mongodb
+check_root
+
 cp mongo.repo /etc/yum.repos.d/mongodb.repo
 VALIDATE $? "copying Mongodb repo"
 
@@ -17,3 +21,5 @@ VALIDATE $? "Editing mongodb conf file for remote connections"
 
 systemctl restart mongod &>> $LOGS_FILE
 VALIDATE $? "Restarting mongodb server"
+
+print_time
