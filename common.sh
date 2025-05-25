@@ -39,7 +39,7 @@ app_setup(){
 }
 
 nodejs_setup(){
-    
+
     dnf module disable nodejs -y &>> $LOG_FILE
     VALIDATE $? "Disabling nodejs"
 
@@ -53,6 +53,15 @@ nodejs_setup(){
     VALIDATE $? "Installing dependencies using node package manager"
 }
 
+python_setup(){
+
+    dnf install python3 gcc python3-devel -y
+    VALIDATE $? "Installing python3 server"
+
+    pip3 install -r requirements.txt &>> $LOG_FILE
+    VALIDATE $? "Installing dependencies using pip3"
+    
+}
 # check the user has root priveleges or not
 check_root(){
     if [ $USERID -ne 0 ]
