@@ -1,5 +1,9 @@
 #!/bin/bash
 
+source ./common.sh
+app_name=mysql
+check_root
+
 echo "Please enter rabbitmq password to setup"
 read -s RABBITMQ_PASSWD
 
